@@ -38,19 +38,19 @@ public class MsgModel implements Cloneable {
         this.fileDelimiter = fileDelimiter;
     }
 
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        MsgModel clone = null;
-        try {
-            clone = (MsgModel) super.clone();
+    // @Override
+    // protected Object clone() throws CloneNotSupportedException {
+    //     MsgModel clone = null;
+    //     try {
+    //         clone = (MsgModel) super.clone();
 
-            // Copy new date object to cloned method
-            // clone.setDob((Date) this.getDob().clone());
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-        return clone;
-    }
+    //         // Copy new date object to cloned method
+    //         // clone.setDob((Date) this.getDob().clone());
+    //     } catch (CloneNotSupportedException e) {
+    //         throw new RuntimeException(e);
+    //     }
+    //     return clone;
+    // }
 
     public int getMsgNo() {
         return msgNo;

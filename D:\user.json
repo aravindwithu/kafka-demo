@@ -1,0 +1,1 @@
+{"msgNo":1,"query":"select * from user","outputType":"csv","sourceDB":"DEVLZB","mailTo":"avenkituswamy@netspend.com","mailFrom":"productionsupport@netspend.com","mailSubject":"Kafka test mail","fileName":"TempTestFile","fileDelimiter":","}

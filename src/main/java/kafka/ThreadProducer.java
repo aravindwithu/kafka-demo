@@ -62,7 +62,7 @@ public class ThreadProducer extends Thread {
         List<MsgModel> tempList = new ArrayList<>();
         Iterator<MsgModel> iterator = this.msgList.iterator();
         while (iterator.hasNext()) {
-            tempList.add((MsgModel) iterator.next().clone());
+            //tempList.add((MsgModel) iterator.next().clone());
         }
         this.msgList.removeAll(this.msgList);
         return tempList;
