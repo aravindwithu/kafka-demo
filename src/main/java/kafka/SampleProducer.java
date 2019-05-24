@@ -34,11 +34,12 @@ public class SampleProducer {
     public void sendMsg(MsgModel msg) {
         long startTime = System.currentTimeMillis();
         if (isAsync) { // Send asynchronously
-            producer.send(new ProducerRecord(topic, msg.msgNo, msg), new DemoCallBack(startTime, msg.msgNo, msg.query));
+            producer.send(new ProducerRecord(topic, msg.getMsgNo(), msg.getMsgStr()), new DemoCallBack(startTime, msg.getMsgNo(), msg.msgStr));
+            System.out.println("Sent message: (" + msg.getMsgNo() + ", " + msg.msgStr + ")");
         } else { // Send synchronously
             try {
-                producer.send(new ProducerRecord(topic, msg.msgNo, msg)).get();
-                System.out.println("Sent message: (" + msg.msgNo + ", " + msg + ")");
+                producer.send(new ProducerRecord(topic, msg.getMsgNo(), msg.getMsgStr())).get();
+                System.out.println("Sent message: (" + msg.getMsgNo() + ", " + msg.msgStr + ")");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 // handle the exception

@@ -95,11 +95,11 @@ public class ThreadProducer extends Thread {
     private void sendMsg(MsgModel msg) {
         long startTime = System.currentTimeMillis();
         if (isAsync) { // Send asynchronously
-            producer.send(new ProducerRecord(topic, msg.msgNo, msg.query), new DemoCallBack(startTime, msg.msgNo, msg.query));
+            producer.send(new ProducerRecord(topic, msg.msgNo, msg.msgStr), new DemoCallBack(startTime, msg.msgNo, msg.msgStr));
         } else { // Send synchronously
             try {
-                producer.send(new ProducerRecord(topic, msg.msgNo, msg.query)).get();
-                System.out.println("Sent message: (" + msg.msgNo + ", " + msg.query + ")");
+                producer.send(new ProducerRecord(topic, msg.msgNo, msg.msgStr)).get();
+                System.out.println("Sent message: (" + msg.msgNo + ", " + msg.msgStr + ")");
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
                 // handle the exception
