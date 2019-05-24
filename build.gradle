@@ -3,6 +3,7 @@ apply plugin: 'maven'
 apply plugin: 'application'
 
 mainClassName = 'kafka.KafkaProducerDemo'
+//mainClassName = 'kafka.KafkaConsumerDemo'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
