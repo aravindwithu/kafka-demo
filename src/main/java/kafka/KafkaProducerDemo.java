@@ -37,7 +37,7 @@ public class KafkaProducerDemo {
                 // System.out.println(msgRtn);
 
                 // // Convert object to JSON string and pretty print
-                // jsonInString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(msg);
+                // jsonObj = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(msg);
                 // System.out.println(jsonInString);
             }	
 		} catch (JsonGenerationException e) {

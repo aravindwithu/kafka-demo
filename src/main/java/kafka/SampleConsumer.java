@@ -1,47 +1,69 @@
 package kafka;
 
-import kafka.utils.ShutdownableThread;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
- 
+import org.apache.kafka.clients.consumer.*;
+import org.apache.kafka.clients.consumer.Consumer;
+import org.apache.kafka.common.serialization.IntegerDeserializer;
+import org.apache.kafka.common.serialization.StringDeserializer;
+
 import java.util.Collections;
 import java.util.Properties;
 
-import java.util.Collection; 
 /**
 * Kafka Consumer with Example Java Application
 */
 public class SampleConsumer {
-    private final KafkaConsumer consumer;
-    private final String topic;
-    
+    private String TOPIC = null;
+
     public static final String KAFKA_SERVER_URL = "localhost";
     public static final int KAFKA_SERVER_PORT = 9092;
-    public static final String CLIENT_ID = "SampleConsumer";
- 
-    public SampleConsumer(String topic) {
-        Properties props = new Properties();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER_URL + ":" + KAFKA_SERVER_PORT);
-        props.put(ConsumerConfig.GROUP_ID_CONFIG, CLIENT_ID);
-        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
-        props.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
-        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "30000");
-        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.IntegerDeserializer");
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
- 
-        consumer = new KafkaConsumer(props);
-        this.topic = topic;
 
-        consumer.subscribe(Collections.singletonList(this.topic));
-
+    public SampleConsumer(String topic){
+        this.TOPIC = topic;
     }
- 
-    public void showMsg() {
-        consumer.subscribe(Collections.singletonList(this.topic));
-        ConsumerRecords records = consumer.poll(1000);
-        System.out.println(records);
+
+    private Consumer<Integer, String> createConsumer() {
+        Properties properties = new Properties();
+        properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_SERVER_URL + ":" + KAFKA_SERVER_PORT);
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG,
+        "KafkaExampleConsumer");
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,
+        IntegerDeserializer.class.getName());
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,
+        StringDeserializer.class.getName());
+        // Create the consumer using props.
+        final Consumer<Integer, String> consumer =
+        new KafkaConsumer<>(properties);
+    
+        // Subscribe to the topic.
+        consumer.subscribe(Collections.singletonList(TOPIC));
+        return consumer;
+    }
+
+    public void showMsg() throws InterruptedException {
+        final Consumer<Integer, String> consumer = createConsumer();
+
+        final int giveUp = 100;   int noRecordsCount = 0;
+
+        while (true) {
+            final ConsumerRecords<Integer, String> consumerRecords =
+                    consumer.poll(1000);
+
+            if (consumerRecords.count()==0) {
+                noRecordsCount++;
+                if (noRecordsCount > giveUp) break;
+                else continue;
+            }
+
+            consumerRecords.forEach(record -> {
+                System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
+                        record.key(), record.value(),
+                        record.partition(), record.offset());
+            });
+
+            consumer.commitAsync();
+        }
+        consumer.close();
+        System.out.println("DONE");
     }
 
 }
