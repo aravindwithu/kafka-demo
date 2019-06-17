@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
+import kafka.model.MsgModel;
+
 /**
  * Producer Example in Apache Kafka
  * 

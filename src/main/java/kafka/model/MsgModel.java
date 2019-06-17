@@ -1,4 +1,4 @@
-package kafka;
+package kafka.model;
 
 public class MsgModel implements Cloneable {
     public int msgNo;

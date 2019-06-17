@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutionException;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
+import kafka.model.MsgModel;
+
 /**
  * Producer Example in Apache Kafka
  * 
@@ -17,7 +19,7 @@ public class SampleProducer {
     private final Boolean isAsync;
 
     public static final String KAFKA_SERVER_URL = "localhost";
-    public static final int KAFKA_SERVER_PORT = 9092;
+    public static final int KAFKA_SERVER_PORT = 9095;
     public static final String CLIENT_ID = "SampleProducer";
 
     public SampleProducer(String topic, Boolean isAsync) {

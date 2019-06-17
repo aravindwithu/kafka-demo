@@ -1,4 +1,4 @@
-package kafka;
+package kafka.model;
 
 public class RavenModel implements Cloneable {
     public String query;

@@ -1,12 +1,16 @@
 package kafka;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
+
+import kafka.model.MsgModel;
+import kafka.model.RavenModel;
 
 public class KafkaProducerDemo {
-    public static final String TOPIC = "sampleTopic";
+    public static final String TOPIC = "replicatedTopic2";
     
     public static void main(String[] args) throws InterruptedException {
 
@@ -16,7 +20,7 @@ public class KafkaProducerDemo {
         ObjectMapper mapper = new ObjectMapper();
         
 		try {
-            for(int i = 0; i<10; i++){
+            for(int i = 0; i<150000; i++){
                 ravenReq = new RavenModel("select * from user", "csv", "DEVLZB", "avenkituswamy@netspend.com", "productionsupport@netspend.com", "Kafka test mail", "TempTestFile", ",");
                 System.out.println("\n--------------------ravenReq-----------------------------\n");
 

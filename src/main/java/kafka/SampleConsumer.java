@@ -15,7 +15,7 @@ public class SampleConsumer {
     private String TOPIC = null;
 
     public static final String KAFKA_SERVER_URL = "localhost";
-    public static final int KAFKA_SERVER_PORT = 9092;
+    public static final int KAFKA_SERVER_PORT = 9095;
 
     public SampleConsumer(String topic){
         this.TOPIC = topic;
@@ -42,11 +42,11 @@ public class SampleConsumer {
     public void showMsg() throws InterruptedException {
         final Consumer<Integer, String> consumer = createConsumer();
 
-        final int giveUp = 100;   int noRecordsCount = 0;
+        final int giveUp = 1000;   int noRecordsCount = 0;
 
         while (true) {
             final ConsumerRecords<Integer, String> consumerRecords =
-                    consumer.poll(1000);
+                    consumer.poll(5000);
 
             if (consumerRecords.count()==0) {
                 noRecordsCount++;
@@ -58,6 +58,8 @@ public class SampleConsumer {
                 System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
                         record.key(), record.value(),
                         record.partition(), record.offset());
+
+
             });
 
             consumer.commitAsync();
